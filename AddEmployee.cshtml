@@ -1,0 +1,58 @@
+﻿@* @model Employee
+
+<h2>Add Employee</h2>
+
+<form asp-action="AddEmployee" method="post">
+    <label>Name:</label>
+    <input type="text" asp-for="Name" required class="form-control" />
+
+    <label>Designation:</label>
+    <input type="text" asp-for="Designation" required class="form-control" />
+
+    <button type="submit" class="btn btn-primary mt-2">Add Employee</button>
+</form>
+ *@
+
+ @model ManagementSystem1.Models.Employee
+
+@{
+    ViewData["Title"] = "Add Employee";
+}
+
+<h2 class="text-center text-success">Add New Employee</h2>
+
+<div class="card shadow-lg p-4">
+    <form asp-action="AddEmployee" method="post">
+        <div asp-validation-summary="ModelOnly" class="alert alert-danger d-none"></div>
+
+        <!-- Employee Name -->
+        <div class="form-group">
+            <label asp-for="Name" class="fw-bold">Employee Name</label>
+            <input asp-for="Name" class="form-control" placeholder="Enter Employee Name" required />
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+
+        <!-- Employee Designation -->
+        <div class="form-group mt-3">
+            <label asp-for="Designation" class="fw-bold">Designation</label>
+            <input asp-for="Designation" class="form-control" placeholder="Enter Designation" required />
+            <span asp-validation-for="Designation" class="text-danger"></span>
+        </div>
+
+        <!-- Buttons -->
+        <div class="text-center mt-4">
+            <button type="submit" class="btn btn-primary">
+                <i class="fas fa-save"></i> Save Employee
+            </button>
+            <a asp-action="Index" class="btn btn-secondary">
+                <i class="fas fa-arrow-left"></i> Back to List
+            </a>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

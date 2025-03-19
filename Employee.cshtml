@@ -1,0 +1,150 @@
+﻿@* @model ManagementSystem1.Models.Employee
+
+@{
+    ViewData["Title"] = "Employee";
+}
+
+<h1>Employee</h1>
+
+<h4>Employee</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Employee">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Id" class="control-label"></label>
+                <input asp-for="Id" class="form-control" />
+                <span asp-validation-for="Id" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Designation" class="control-label"></label>
+                <input asp-for="Designation" class="form-control" />
+                <span asp-validation-for="Designation" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+ *@
+
+@* @model ManagementSystem1.Models.Employee
+
+@{
+    ViewData["Title"] = "Add Employee";
+}
+
+<h2 class="text-center text-success">Add New Employee</h2>
+
+<div class="card shadow-lg p-4">
+    <form asp-action="AddEmployee" method="post">
+        <div asp-validation-summary="ModelOnly" class="alert alert-danger d-none"></div>
+
+        <!-- Employee Name -->
+        <div class="form-group">
+            <label asp-for="Name" class="fw-bold">Employee Name</label>
+            <input asp-for="Name" class="form-control" placeholder="Enter Employee Name" required />
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+
+        <!-- Employee Designation -->
+        <div class="form-group mt-3">
+            <label asp-for="Designation" class="fw-bold">Designation</label>
+            <input asp-for="Designation" class="form-control" placeholder="Enter Designation" required />
+            <span asp-validation-for="Designation" class="text-danger"></span>
+        </div>
+
+        <!-- Buttons -->
+        <div class="text-center mt-4">
+            <button type="submit" class="btn btn-primary">
+                <i class="fas fa-save"></i> Save Employee
+            </button>
+            <a asp-action="Index" class="btn btn-secondary">
+                <i class="fas fa-arrow-left"></i> Back to List
+            </a>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
+ *@
+@model List<ManagementSystem1.Models.Employee>
+
+@{
+    ViewData["Title"] = "Employees";
+}
+
+<h2 class="text-center text-success">🍽️ Employee List</h2>
+
+<div class="d-flex justify-content-end mb-3">
+    <a asp-action="AddEmployee" class="btn btn-primary"><i class="fas fa-plus"></i> Add New Employee</a>
+</div>
+
+<table class="table table-hover table-bordered">
+    <thead class="bg-dark text-light">
+        <tr>
+            <th>Name</th>
+            <th>Designation</th>
+            <th class="text-center">Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model != null && Model.Any())
+        {
+            @foreach (var emp in Model)
+            {
+                <tr>
+                    <td>@emp.Name</td>
+                    <td>@emp.Designation</td>
+                    <td class="text-center">
+                        <a asp-action="DeleteEmployee" asp-route-id="@emp.Id" class="btn btn-danger btn-sm"
+                           onclick="return confirm('Are you sure you want to delete this employee?');">
+                            <i class="fas fa-trash-alt"></i> Delete
+                        </a>
+                    </td>
+                </tr>
+            }
+        }
+        else
+        {
+            <tr>
+                <td colspan="3" class="text-center text-danger">No employees found.</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<style>
+    .bg-dark {
+        background-color: #343a40;
+    }
+
+    .btn-primary {
+        background-color: #28a745;
+        border: none;
+    }
+
+        .btn-primary:hover {
+            background-color: #218838;
+        }
+</style>
+
